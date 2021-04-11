@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon_register.ico" type="image/x-icon">
+    <title>Register Form</title>
+</head>
+<style>
+    .formdesign {
+        text-align: center;
+        padding: 10px;
+    }
+
+    #firstname,
+    #lastname,
+    #email,
+    #city,
+    #username,
+    #password {
+        height: 20px;
+        width: 300px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 10%;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    #submit {
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <h1>Registration Form</h1>
+    <form id="register_form" method="POST">
+        <div class="formdesign">
+            <label for="firstname"> First Name: </label>
+            <input type="text" name="firstname" id="firstname" placeholder="Enter your first name here" required>
+        </div>
+
+        <div class="formdesign">
+            <label for="lastname"> Last Name: </label>
+            <input type="text" name="lastname" id="lastname" placeholder="Enter your last name here" required>
+        </div>
+
+        <div class="formdesign">
+            <label for="email"> Email: </label>
+            <input type="email" name="email" id="email" placeholder="Enter your email here" required>
+        </div>
+
+        <div class="formdesign">
+            <label for="city"> City: </label>
+            <input type="text" name="city" id="city" placeholder="Enter your city here" required>
+        </div>
+
+        <div class="formdesign">
+            <label for="username"> Username: </label>
+            <input type="text" name="username" id="username" placeholder="Enter your username here" required>
+        </div>
+
+        <div class="formdesign">
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password" placeholder="Enter your password here" required>
+        </div>
+
+        <div class="formdesign">
+            <input type="submit" value="Register" id="submit">
+        </div>
+    </form>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    jQuery('#register_form').on('submit', function (e) {
+        jQuery.ajax({
+            url: 'http://127.0.0.1:8000/register/user/',
+            type: 'POST',
+            data: jQuery('#register_form').serialize(),
+            success: function (response) {
+                if (response['status'] == 'success'){
+                    alert('Registration Successfull!');
+                    window.open('http://127.0.0.1:5500/login_register_api_frontend/login_form.html', '_blank');
+                }else{
+                    alert('Registration Failed!');
+                }
+            }
+        });
+        alert('Form Submitted');
+        e.preventDefault();
+    });
+</script>
+
+</html>
