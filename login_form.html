@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/login_register_api_frontend/favicon_login.ico" type="image/x-icon">
+    <title>Login Form</title>
+</head>
+<style>
+    .formdesign {
+        text-align: center;
+        padding: 10px;
+    }
+
+    #username,
+    #password {
+        height: 20px;
+        width: 300px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 10%;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    #submit {
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <h1>Login Form</h1>
+    <form id="login_form" method="POST" target="_blank">
+        <div class="formdesign">
+            <label for="username"> Username: </label>
+            <input type="text" name="username" id="username" placeholder="Enter your username here" required>
+        </div>
+
+        <div class="formdesign">
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password" placeholder="Enter your password here" required>
+        </div>
+
+        <div class="formdesign">
+            <input type="submit" value="Login" id="submit">
+        </div>
+    </form>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/login_register_api_frontend/jquery.js"></script>
+<script>
+    jQuery('#login_form').on('submit', function (e) {
+        var uname = $('#username').val();
+        var pass = $('#password').val();
+        jQuery.ajax({
+            url: 'http://127.0.0.1:8000/login/user/',
+            type: 'POST',
+            data: {
+                username: uname,
+                password: pass
+            },
+            success: function (response) {
+                if (response['status'] == 'success'){
+                    alert('Login Successfull!');
+                    window.open('http://127.0.0.1:5500/login_register_api_frontend/home.html', '_blank');
+                }else{
+                    alert('Login Failed: User Does Not Exist!');
+                }
+            }
+        });
+        alert('Form Submitted');
+        e.preventDefault();
+    });
+</script>
+
+</html>
